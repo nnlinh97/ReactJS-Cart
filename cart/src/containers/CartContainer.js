@@ -22,13 +22,15 @@ class CartContainer extends Component {
     }
     showCart(cart) {
         let result = Message.MSG_CART_EMPTY;
-        let {onDeleteProduct} = this.props;
+        let { onDeleteProduct, onchangeMessage, onUpdateQuantityInCart } = this.props;
         if (cart.length > 0) {
             result = cart.map((cartItem, index) => {
                 return <CartItem
                     key={index}
                     cartItem={cartItem}
                     onDeleteProduct={onDeleteProduct}
+                    onchangeMessage={onchangeMessage}
+                    onUpdateQuantityInCart={onUpdateQuantityInCart}
                 />
             });
         }
@@ -56,7 +58,9 @@ CartContainer.propTypes = {
             rating: PropTypes.number.isRequired
         }).isRequired,
         quantity: PropTypes.number.isRequired
-    })).isRequired //phải là một array và phải có phần tử
+    })).isRequired, //phải là một array và phải có phần tử
+    onchangeMessage: PropTypes.func.isRequired,
+    onUpdateQuantity: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -69,7 +73,13 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onDeleteProduct: (product) => {
             dispatch(Actions.actionRemoveProductInCart(product))
+        },
+        onchangeMessage: (message) => {
+            dispatch(Actions.actionChangeMessage(message));
+        },
+        onUpdateQuantityInCart: (product, quantity) => {
+            dispatch(Actions.actionUpdateQuantityInCart(product, quantity));
         }
     }
-  }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);
