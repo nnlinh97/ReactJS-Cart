@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ProductsList from '../components/Content/Products/ProductsList';
 import ProductItem from '../components/Content/Products/ProductItem';
 import PropTypes from 'prop-types';
+import * as actions from './../actions/index'
 
 class ProductsContainer extends Component {
 
@@ -19,11 +20,14 @@ class ProductsContainer extends Component {
 
     showProducts(products) {
         let result = null;
+        let { onAddToCart, onchangeMessage } = this.props;
         if (products.length > 0) {
             result = products.map((product, index) => {
                 return <ProductItem
                     key={index}
                     product={product}
+                    onAddToCart={onAddToCart}
+                    onchangeMessage={onchangeMessage}
                 />
             });
         }
@@ -43,7 +47,8 @@ ProductsContainer.propTypes = {
             inventory: PropTypes.number.isRequired,
             rating: PropTypes.number.isRequired
         })
-    ).isRequired //phải là một array và phải có phần tử
+    ).isRequired, //phải là một array và phải có phần tử
+    onchangeMessage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -51,4 +56,15 @@ const mapStateToProps = (state) => {
         products: state.products
     }
 }
-export default connect(mapStateToProps, null)(ProductsContainer);
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onAddToCart: (product) => {
+            dispatch(actions.actionAddToCart(product, 1));
+        },
+        onchangeMessage: (message) => {
+            dispatch(actions.actionChangeMessage(message));
+        }
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsContainer);

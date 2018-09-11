@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import CartList from './Cart/CartList';
+// import CartList from './Cart/CartList';
 // import ProductsList from './Products/ProductsList';
-import Message from './Message/Message';
+// import Message from './Message/Message';
 import ProductsContainer from './../../containers/ProductsContainer';
+import CartContainer from '../../containers/CartContainer';
+import MessageContainer from '../../containers/MessageContainer';
 
 class Content extends Component {
     render() {
@@ -11,8 +13,10 @@ class Content extends Component {
                 <div className="container">
                     {/* <ProductsList /> */}
                     <ProductsContainer/>
-                    <Message />
-                    <CartList />
+                    {/* <Message /> */}
+                    {/* <CartList /> */}
+                    <MessageContainer/>
+                    <CartContainer/>
                 </div>
             </main>
         );

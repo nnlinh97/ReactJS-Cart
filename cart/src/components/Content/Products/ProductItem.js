@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
+import * as Message from '../../../constants/Messages';
 
 class ProductItem extends Component {
-    showRating(rating){
-        let result = [];
-        for (let i =0; i < rating; i++){
-            result.push(<i key={i} className="fa fa-star"></i>);
-        }
-        for (let i =0; i < (5-rating); i++){
-             result.push(<i key={5-i} className="fa fa-star-o"></i>);
-        }
-        return result;
-    }
+
     render() {
-        let {product} = this.props;
+        let { product } = this.props;
         return (
             <div className="col-lg-4 col-md-6 mb-r">
                 <div className="card text-center card-cascade narrower">
@@ -37,7 +29,7 @@ class ProductItem extends Component {
                         <div className="card-footer">
                             <span className="left">{product.price}$</span>
                             <span className="right">
-                                <a className="btn-floating blue-gradient" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Cart">
+                                <a onClick={() => this.onAddToCart(product)} className="btn-floating blue-gradient" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Cart">
                                     <i className="fa fa-shopping-cart"></i>
                                 </a>
                             </span>
@@ -47,6 +39,23 @@ class ProductItem extends Component {
             </div>
         );
     }
+
+    showRating(rating) {
+        let result = [];
+        for (let i = 0; i < rating; i++) {
+            result.push(<i key={i} className="fa fa-star"></i>);
+        }
+        for (let i = 0; i < (5 - rating); i++) {
+            result.push(<i key={5 - i} className="fa fa-star-o"></i>);
+        }
+        return result;
+    }
+
+    onAddToCart = (product) => {
+        this.props.onAddToCart(product);
+        this.props.onchangeMessage(Message.MSG_MUA_HANG_THANH_CONG);
+    }
 }
+
 
 export default ProductItem;
